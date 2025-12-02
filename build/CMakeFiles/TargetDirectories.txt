@@ -1,0 +1,3 @@
+/Users/negin/FiniteDoodle/build/CMakeFiles/FiniteDoodle.dir
+/Users/negin/FiniteDoodle/build/CMakeFiles/edit_cache.dir
+/Users/negin/FiniteDoodle/build/CMakeFiles/rebuild_cache.dir
