@@ -1,7 +1,6 @@
 // g++ -o FiniteDoodle src/main.cpp -I/opt/homebrew/include/SDL2 -L/opt/homebrew/lib -lSDL2
 // ./FiniteDoodle
 
-
 #include <SDL.h>
 #include <iostream>
 #include <vector>
