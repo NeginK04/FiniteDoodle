@@ -41,7 +41,9 @@ int main(int argc, char* argv[]) {
     bool running = true;
     SDL_Event event;
     bool drawing = false;
-    std::vector<std::pair<int, int>> points; // Store drawn points
+    // Store multiple strokes, each stroke is a vector of points
+    std::vector<std::vector<std::pair<int, int>>> strokes;
+    std::vector<std::pair<int, int>> currentStroke;
 
     while (running) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // White background
@@ -52,21 +54,34 @@ int main(int argc, char* argv[]) {
                 running = false;
             } else if (event.type == SDL_MOUSEBUTTONDOWN) {
                 drawing = true;
+                currentStroke.clear(); // Start a new stroke
             } else if (event.type == SDL_MOUSEBUTTONUP) {
                 drawing = false;
+                if (!currentStroke.empty()) {
+                    strokes.push_back(currentStroke); // Save the stroke
+                }
             } else if (event.type == SDL_MOUSEMOTION && drawing) {
                 int x, y;
                 SDL_GetMouseState(&x, &y);
-                points.push_back({x, y}); // Store the point
+                currentStroke.push_back({x, y}); // Store the point in current stroke
             }
         }
 
-        // Draw all stored points
+        // Draw all strokes
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Pen set to black
-        for (const auto& p : points) {
-            SDL_RenderDrawPoint(renderer, p.first, p.second);
+        for (const auto& stroke : strokes) {
+            for (size_t i = 1; i < stroke.size(); ++i) {
+                // Making pen stroke continuous
+                SDL_RenderDrawLine(renderer, stroke[i-1].first, stroke[i-1].second, stroke[i].first, stroke[i].second);
+            }
         }
 
+        // Draw the current stroke in progress
+        for (size_t i = 1; i < currentStroke.size(); ++i) {
+            SDL_RenderDrawLine(renderer, currentStroke[i-1].first, currentStroke[i-1].second, currentStroke[i].first, currentStroke[i].second);
+        }
+
+        // Update the screen
         SDL_RenderPresent(renderer);
     }
 
