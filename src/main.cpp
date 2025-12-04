@@ -102,18 +102,28 @@ int main(int argc, char* argv[]) {
                 if (drawing && currentTool == PEN) {
                     currentStroke.push_back({x, y});
                 } else if (drawing && currentTool == ERASER) {
-                    // Erase points within eraser radius only when mouse is pressed
+                    std::vector<std::vector<std::pair<int, int>>> newStrokes;
                     for (auto& stroke : strokes) {
-                        stroke.erase(
-                            std::remove_if(stroke.begin(), stroke.end(),
-                                [x, y](const std::pair<int, int>& pt) {
-                                    int dx = pt.first - x;
-                                    int dy = pt.second - y;
-                                    return dx*dx + dy*dy <= ERASER_RADIUS*ERASER_RADIUS;
-                                }),
-                            stroke.end()
-                        );
+                        std::vector<std::pair<int, int>> segment;
+                        for (const auto& pt : stroke) {
+                            int dx = pt.first - x;
+                            int dy = pt.second - y;
+                            if (dx*dx + dy*dy > ERASER_RADIUS*ERASER_RADIUS) {
+                                segment.push_back(pt);
+                            } else {
+                                // If segment has points, save it as a new stroke
+                                if (!segment.empty()) {
+                                    newStrokes.push_back(segment);
+                                    segment.clear();
+                                }
+                            }
+                        }
+                        // Add any remaining segment
+                        if (!segment.empty()) {
+                            newStrokes.push_back(segment);
+                        }
                     }
+                    strokes = newStrokes;
                 }
             }
         }
