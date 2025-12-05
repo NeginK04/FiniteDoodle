@@ -12,7 +12,7 @@ enum Tool { PEN, ERASER };
 Tool currentTool = PEN;
 const SDL_Rect penButton = {10, 10, 80, 40};
 const SDL_Rect eraserButton = {100, 10, 80, 40};
-const int ERASER_RADIUS = 12; // Eraser size
+const int ERASER_RADIUS = 5; // Eraser size
 
 int main(int argc, char* argv[]) {
     // Initialize SDL
