@@ -95,6 +95,7 @@ FiniteDoodle_EXTERNAL_OBJECTS =
 
 FiniteDoodle: CMakeFiles/FiniteDoodle.dir/src/main.cpp.o
 FiniteDoodle: CMakeFiles/FiniteDoodle.dir/build.make
+FiniteDoodle: /opt/homebrew/Cellar/sdl2/2.32.10/lib/libSDL2.dylib
 FiniteDoodle: CMakeFiles/FiniteDoodle.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/negin/FiniteDoodle/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable FiniteDoodle"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/FiniteDoodle.dir/link.txt --verbose=$(VERBOSE)
